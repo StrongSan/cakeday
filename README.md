@@ -26,3 +26,26 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+04.05 프로필 화면 설계 a1.2
+RegionSelectionScreen.tsx
+-BackHeader가 TypeScrpits 에서 지정받아야하는 Prop을 받지 못하던 문제 해결
+-onBack={() => navigation.goBack()}/> 추가
+
+-ProfileSetupScreen 에서 arrowRight 를 누르면 RegionSelectionScreen 으로 이동하는 네비게이션 추가
+
+-RegionSelectionScreen에서 지역을 선택하지 않아도 이동이 가능했던 버그 픽스
+-if (!selectedRegions[0]) {
+    Alert.alert('지역 선택', '관심 지역을 선택해주세요.');
+    return;
+
+-RegionSelectionScreen에서 지역을 선택하고 돌아올경우 선택한 지역 표시 기능 추가
+-RegionSelectionScreen에서 지역을 선택하고 돌아오면, 닉네임을 비롯한 모든 정보들이 초기화 되는 버그 픽스
+useEffect(() => {
+  const { location, nickname, userType, selectedCakes } = route.params || {};
+  if (location) setLocation(location);
+  if (nickname) setNickname(nickname);
+  if (userType !== undefined) setUserType(userType);
+  if (selectedCakes) setSelectedCakes(selectedCakes);
+}, [route.params]);
+
